@@ -2,7 +2,6 @@ package com.example.jezyki_programowania_lista_2
 
 // Zadanie 1
 class Wielomian {
-
     // Lista przechowująca współczynniki wielomianu
     var wspolczynniki:MutableList<Double> = mutableListOf()
 
