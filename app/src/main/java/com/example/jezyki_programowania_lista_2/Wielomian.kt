@@ -1,10 +1,12 @@
 package com.example.jezyki_programowania_lista_2
 
-
 // Zadanie 1
 class Wielomian {
 
+    // Lista przechowująca współczynniki wielomianu
     var wspolczynniki:MutableList<Double> = mutableListOf()
+
+    // Konstruktor przyjmujący listę współczynników. Rzuca wyjątek, jeśli lista jest pusta. Usuwa też zerowe współczynniki na końcu wielomianu.
     constructor(nowe_wspolczynniki: MutableList<Double>){
         if (nowe_wspolczynniki.isEmpty()) {
             throw IllegalArgumentException("Lista współczynników nie może być pusta.")
@@ -16,11 +18,11 @@ class Wielomian {
             }
         }
     }
-
+    // Funkcja zwracająca stopień wielomianu
     fun stopien_wielomianu():Int{
         return wspolczynniki.size - 1
     }
-
+    // Funkcja zwracająca tekstową reprezentację wielomianu
     fun tekstowa_reprezentacja():String{
         var stopien:Int = wspolczynniki.size - 1
         var reprezentacja:String = "W(x) = "
@@ -38,6 +40,7 @@ class Wielomian {
         }
         return reprezentacja
     }
+    // Operator pozwalający obliczyć wartość wielomianu dla danej wartości x
     operator fun invoke(x: Double): Double {
         var stopien:Int = wspolczynniki.size - 1
         var suma:Double = 0.0
@@ -47,7 +50,7 @@ class Wielomian {
         }
         return suma
     }
-
+    // Operator pozwalający dodać dwa wielomiany
     operator fun plus(inny: Wielomian): Wielomian {
         val noweWspolczynniki = mutableListOf<Double>()
         val maxLength = maxOf(wspolczynniki.size, inny.wspolczynniki.size)
@@ -58,7 +61,7 @@ class Wielomian {
         }
         return Wielomian(noweWspolczynniki)
     }
-
+    // Operator pozwalający odjąć jeden wielomian od drugiego
     operator fun minus (inny: Wielomian): Wielomian {
         val noweWspolczynniki = mutableListOf<Double>()
         val maxLength = maxOf(wspolczynniki.size, inny.wspolczynniki.size)
@@ -69,6 +72,7 @@ class Wielomian {
         }
         return Wielomian(noweWspolczynniki)
     }
+    // Operator pozwalający pomnożyć wielomian przez skalar
     operator fun times(mnoznik: Double): Wielomian{
         val nowe_wspolczynniki:MutableList<Double> = mutableListOf()
         for(wspolczynnik in wspolczynniki){
@@ -76,6 +80,7 @@ class Wielomian {
         }
         return Wielomian(nowe_wspolczynniki)
     }
+    // Operator pozwalający pomnożyć dwa wielomiany
     operator fun times(inny: Wielomian): Wielomian {
         val noweWspolczynniki = MutableList(stopien_wielomianu() + inny.stopien_wielomianu() + 1) { 0.0 }
         for (i in wspolczynniki.indices) {
@@ -86,7 +91,7 @@ class Wielomian {
         return Wielomian(noweWspolczynniki)
     }
 }
-
+// Funkcja main prezentująca funkcjonalność klasy Wielomian
 fun main (){ // kod prezentujący funkcjonalność klasy Wielomian
     var W1: Wielomian = Wielomian(mutableListOf(1.0, 2.0, 3.0, 4.0))
     println(W1.tekstowa_reprezentacja())
