@@ -1,5 +1,7 @@
 package com.example.jezyki_programowania_lista_2
 
+import kotlin.test.assertEquals
+
 class DNASequence:Sequence {
     constructor(new_identifier:String, new_data:String):super(new_identifier, new_data, listOf('A', 'T', 'C', 'G')){
     }
@@ -17,6 +19,6 @@ class DNASequence:Sequence {
         for(zasada_azotowa in data){
             complementData += complementMap[zasada_azotowa]
         }
-        return RNASequence(identifier, complementData)
+        return RNASequence(identifier + " transkrybowane", complementData)
     }
 }

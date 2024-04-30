@@ -55,14 +55,37 @@ class RNASequence:Sequence {
     fun isStopKodon(kodon: String): Boolean {
         return kodon in listOf("UAA","UAG","UGA" )
     }
-    fun transcribe():RNASequence{
-        var i:Int = 0
-        for(element in data){
-             if(isStartKodon(data.substring(i, i+3))){
-                 // Jesli zostanie znaleziony kodon "start" rozpoczyna sie proces transkrypcji
+    fun transcribe():ProteinSequence{
+        var result:String = ""
 
-             }
+        var start = data.indexOf("AUG")
+        if (start == -1){
+            throw IllegalArgumentException("Brak kodonu start")
         }
+        var stop = -1
+        stop = data.indexOf("UAA")
+        if (stop == -1){
+            stop = data.indexOf("UAG")
+            if (stop == -1){
+                stop = data.indexOf("UGA")
+                if (stop == -1){
+                    throw IllegalArgumentException("Brak kodonu stop")
+                }
+            }
+        }
+        if ((stop - start)%3 != 0){
+            throw IllegalArgumentException("Pomiedzy startem, a stopem liczba zasad azotowych nie jest podzielna przez 3 ")
+        }
+        var i:Int = start+3
 
+        while (i < stop - 2){
+            var temp:String? = kodonyNaAminokwasy[data.substring(i, i+3)]
+            if (temp == null) {
+                throw IllegalArgumentException("Brak odpowiadającego aminokwasu sekwencji ${data.substring(i, i+3)}")
+            }
+            result += temp
+            i += 3
+        }
+        return ProteinSequence(identifier + " transkrybowane", result)
     }
 }
